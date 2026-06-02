@@ -1,0 +1,40 @@
+{
+  "@@locale": "en",
+  "appTitle": "BlueprintApp",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "productsTitle": "Products",
+  "@productsTitle": {
+    "description": "Title for the products list page"
+  },
+  "productDetailTitle": "Product Detail",
+  "@productDetailTitle": {
+    "description": "Title for the product detail page"
+  },
+  "descriptionLabel": "Description",
+  "@descriptionLabel": {
+    "description": "Label for the description section"
+  },
+  "reviewsCount": "{count} reviews",
+  "@reviewsCount": {
+    "description": "Number of reviews for a product",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "retryButton": "Retry",
+  "@retryButton": {
+    "description": "Text for the retry button"
+  },
+  "noInternetMessage": "No internet connection. Please check your network.",
+  "@noInternetMessage": {
+    "description": "Error message for no internet"
+  },
+  "genericErrorMessage": "Something went wrong. Please try again.",
+  "@genericErrorMessage": {
+    "description": "Generic error message"
+  }
+}

@@ -1,0 +1,15 @@
+# Use very_good_analysis as mandated by the blueprint.
+# This is the official ruleset by the creators of Bloc.
+include: package:very_good_analysis/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+
+linter:
+  rules:
+    # Allow print statements during development
+    avoid_print: false
+    # Relax public_member_api_docs for an example app
+    public_member_api_docs: false

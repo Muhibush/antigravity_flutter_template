@@ -1,0 +1,11 @@
+{
+  "@@locale": "id",
+  "appTitle": "BlueprintApp",
+  "productsTitle": "Produk",
+  "productDetailTitle": "Detail Produk",
+  "descriptionLabel": "Deskripsi",
+  "reviewsCount": "{count} ulasan",
+  "retryButton": "Coba Lagi",
+  "noInternetMessage": "Tidak ada koneksi internet. Silakan periksa jaringan Anda.",
+  "genericErrorMessage": "Terjadi kesalahan. Silakan coba lagi."
+}
