@@ -1,57 +1,75 @@
-# Antigravity Flutter Template
+# Antigravity Flutter Template 🚀
 
-This repository is built using the **Antigravity Flutter Blueprint**, providing a robust, scalable architecture for senior-level development. It implements a feature-first approach with BLoC state management, GoRouter, and Dio for networking.
+The **Antigravity Flutter Template** is a production-ready, highly opinionated boilerplate designed for senior engineering teams. It eliminates decision fatigue by enforcing strict architectural patterns, scalable folder structures, and high-performance libraries.
 
-## Features & Architecture
+## 📖 The Blueprint
 
-*   **Feature-First Structure**: Pages and their logic (BLoC, models, repositories, widgets) are grouped together.
-*   **State Management (BLoC)**: Follows the official `bloclibrary.dev` recommendations. Uses a single State class with a status enum (`enum BlocStatus { initial, loading, success, failure }`) and a `copyWith` method.
-*   **Data Models**: Uses `json_serializable` and `build_runner` for safe and robust serialization.
-*   **Networking**: Powered by `Dio` and the `Either` pattern (`fpdart`) to safely handle success and failure states without throwing raw exceptions to the BLoC.
-*   **Routing**: Uses `go_router` for declarative routing and native deep-link handling.
-*   **UI & Responsiveness**: Utilizes `flutter_screenutil` for pixel-perfect designs. Enforces Portrait Mode for consistent layouts across devices.
-*   **Code Quality**: Strict linting enforced by `very_good_analysis`.
-*   **Localization & Flavors**: Ready for multiple languages with `flutter_localizations` and separated environments using native flavors (`flutter_flavorizr`).
+This template is strictly governed by the [Flutter Blueprint](flutter_blueprint.md). 
+**Before contributing to this project, you MUST read the Blueprint.** It covers the non-negotiable rules for:
+1. Feature-First Project Structure
+2. BLoC State Management (`flutter_bloc`, `bloc_concurrency`)
+3. Data Models (`json_serializable`)
+4. Linting (`very_good_analysis`)
+5. Routing (`go_router`)
+6. Networking (`dio`, `fpdart`)
+7. UI Responsiveness (`flutter_screenutil`)
+8. Flavors & Environments (Dart Defines)
+9. Testing Strategy (`bloc_test`, `mocktail`, `integration_test`)
 
-## Project Structure
+## 🛠 Project Structure
 
-```
+```text
 lib/
-├── core/             # Infrastructure (network, routing, services, theme)
+├── core/             # Infrastructure (network, routing, services, theme, env)
 ├── pages/            # Feature modules (each containing bloc, model, repo, widget)
 ├── shared/           # Shared components (blocs, models, repositories, widgets)
 └── utils/            # Pure functions, extensions, formatters, and constants
 ```
 
-## Getting Started
+## 🚀 Getting Started
+
+This repository contains a fully working example app (`example_blue_print_app`) that fetches products from a fake API, demonstrating all architectural concepts perfectly.
 
 ### Prerequisites
+* Flutter SDK (latest stable)
+* Dart SDK
 
-*   Flutter SDK (latest stable version)
-*   Dart SDK
+### Running the App
 
-### Setup
-
-1. **Install dependencies:**
+1. **Install dependencies**
    ```bash
+   cd example_blue_print_app
    flutter pub get
    ```
 
-2. **Generate files (JSON serialization, etc.):**
+2. **Generate serialization code**
    ```bash
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-3. **Run the app:**
+3. **Run a specific flavor & environment**
+   The project uses `--dart-define-from-file` to securely inject secrets (never hardcode API keys!).
    ```bash
-   flutter run
+   # Run the Dev environment
+   flutter run --flavor dev -t lib/main_dev.dart --dart-define-from-file=env_dev.json
+
+   # Run the Staging environment
+   flutter run --flavor staging -t lib/main_staging.dart --dart-define-from-file=env_staging.json
+
+   # Run the Prod environment
+   flutter run --flavor prod -t lib/main_prod.dart --dart-define-from-file=env_prod.json
    ```
 
-## Development Guidelines
+## 🧪 Testing
 
-- **BLoC Events**: Name events exactly as actions that happened in the past: `Subject + Noun + PastTenseVerb` (e.g., `LoginButtonPressed`).
-- **Data Models**: Do not manually write `fromJson`/`toJson`. Always use `json_serializable`.
-- **Imports**: Ensure all feature imports are contained within their specific domains unless they are in `shared/`.
+We use a strict 3-tier testing strategy (`mocktail`, `bloc_test`, `integration_test`).
+```bash
+# Run Unit & Widget tests
+flutter test
+
+# Run Integration tests (Requires an active emulator/device)
+flutter test integration_test/app_test.dart
+```
 
 ---
-*Built with the Antigravity Flutter Blueprint.*
+*Built with ❤️ by the Antigravity Architecture Team.*

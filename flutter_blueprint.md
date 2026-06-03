@@ -60,30 +60,30 @@ Do not clutter the top level with `lib/widget/` or `lib/model/`. Any component t
 *   **DO NOT** use the default `flutter_lints`.
 *   **DO** use `very_good_analysis` as the base linting package in `analysis_options.yaml`. This is the official ruleset by the creators of Bloc and enforces all `bloclibrary.dev/lint` best practices (like strict typing, avoiding public properties in Blocs, and proper event handling).
 
-## 4. Routing & Deep Links (GoRouter)
+## 5. Routing & Deep Links (GoRouter)
 *   **DO NOT** use native Navigator 1.0 push/pop or massive switch statements to parse URLs.
 *   **DO** use `go_router` for declarative routing.
 *   **Deep Links:** GoRouter natively handles Deep Links and Universal Links. You do not need an `AppLinksHandler`. Simply define your route paths with parameters (e.g., `path: '/products/:id'`). When the OS receives a deep link, GoRouter automatically intercepts it, extracts the ID, and navigates to the correct page natively.
 
-## 4. Networking (Dio + Either Pattern)
+## 6. Networking (Dio + Either Pattern)
 *   **DO** use `Dio` with interceptors (Request, Error, Retry via `dio_smart_retry`).
 *   **DO** use a `QueuedInterceptor` (e.g. `AuthInterceptor`) to handle Bearer tokens and 401 Unauthorized errors. It must pause outgoing requests, refresh the token via Secure Storage, and retry the paused requests seamlessly to prevent race conditions.
 *   **DO NOT** throw raw exceptions from the Repository to the Bloc.
 *   **DO** wrap repository responses in an `Either` or `Result` pattern (using `fpdart`'s `Either<Failure, SuccessData>`). 
 *   The Bloc should receive the `Either` and `fold()` it into a success or failure state.
 
-## 5. UI & Responsiveness (Phone First)
+## 7. UI & Responsiveness (Phone First)
 *   **DO** use `flutter_screenutil` to translate Figma designs into pixel-perfect UIs using `.w`, `.h`, `.r`, and `.sp`.
 *   **DO** lock the app orientation to Portrait Mode in `main.dart` using `SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);` to prevent UI shattering on tilt.
 *   **Android Safety (Foldables/Tablets):** In `android/app/src/main/AndroidManifest.xml`, set `android:resizeableActivity="false"` and `android:screenOrientation="portrait"`. This prevents Android 12L+ and foldables from forcing your app into split-screen or bizarre aspect ratios, keeping it safe on the Play Store.
 *   **iOS Safety (Tablets):** **DO NOT** target iPads unless explicitly required. When building for production, open the iOS `Runner.xcworkspace` and **uncheck iPad** under Deployment Info so the app runs in iPhone compatibility mode with black borders.
 
-## 6. Localization, Flavors & Environments
+## 8. Localization, Flavors & Environments
 *   **Localization:** Use `flutter_localizations` with standard `.arb` files (`app_en.arb`, `app_id.arb`).
 *   **Flavors:** Use native flavors (Android ProductFlavors & iOS Schemes) managed via `flutter_flavorizr`.
 *   **Environment Variables:** **DO** use `--dart-define-from-file=env_dev.json` to securely inject secrets at compile time. **DO NOT** use unencrypted `.env` files or hardcode API keys. Access variables via `String.fromEnvironment`.
 
-## 7. Testing Strategy
+## 9. Testing Strategy
 *   **Mocking:** **DO** use `mocktail` (not `mockito`). No code generation is needed.
 *   **BLoC Tests:** **DO** use `bloc_test` to verify that events produce the expected sequence of states. Use `mocktail` to inject fake repositories.
 *   **Repository Tests:** **DO** test that the repository correctly wraps API responses (and `DioException`s) in `fpdart`'s `Either` pattern. Mock the `Dio` instance using `mocktail`.
