@@ -81,7 +81,14 @@ Do not clutter the top level with `lib/widget/` or `lib/model/`. Any component t
 ## 6. Localization, Flavors & Environments
 *   **Localization:** Use `flutter_localizations` with standard `.arb` files (`app_en.arb`, `app_id.arb`).
 *   **Flavors:** Use native flavors (Android ProductFlavors & iOS Schemes) managed via `flutter_flavorizr`.
-*   **Environment Variables:** **DO NOT** hardcode API keys or use unencrypted `.env` packages for secrets. **DO** pass environment variables securely at compile-time using `--dart-define-from-file=env_dev.json` and access them via `String.fromEnvironment()` inside a centralized `Env` class.
+*   **Environment Variables:** **DO** use `--dart-define-from-file=env_dev.json` to securely inject secrets at compile time. **DO NOT** use unencrypted `.env` files or hardcode API keys. Access variables via `String.fromEnvironment`.
+
+## 7. Testing Strategy
+*   **Mocking:** **DO** use `mocktail` (not `mockito`). No code generation is needed.
+*   **BLoC Tests:** **DO** use `bloc_test` to verify that events produce the expected sequence of states. Use `mocktail` to inject fake repositories.
+*   **Repository Tests:** **DO** test that the repository correctly wraps API responses (and `DioException`s) in `fpdart`'s `Either` pattern. Mock the `Dio` instance using `mocktail`.
+*   **Widget Tests:** **DO** mock the BLoC using `MockBloc` (from `bloc_test`) to force specific states (loading, success, failure) and verify the UI renders correctly without hitting real APIs.
+*   **Integration Tests:** **DO** write end-to-end tests in `integration_test/` that mount the full `App` widget, hit real (or staging) APIs, and verify full user flows using `pumpAndSettle()`.
 
 ---
 *Auto-generated during the /grill-me session to enforce consistency across all projects.*
