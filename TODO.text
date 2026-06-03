@@ -16,3 +16,5 @@ Networking (Dio + Either Pattern): Uses Dio for HTTP requests and wraps reposito
 
 - make template / code generation
 - steroid bloc with replay_bloc, hydrated_bloc,bloc_tools,bloc_test, bloc_concurrency, and etc
+- readme to flutter blue print. link to how to use
+

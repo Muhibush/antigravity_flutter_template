@@ -30,6 +30,26 @@ class ProductModel extends Equatable {
   final String image;
   final RatingModel rating;
 
+  ProductModel copyWith({
+    int? id,
+    String? title,
+    double? price,
+    String? description,
+    String? category,
+    String? image,
+    RatingModel? rating,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      price: price ?? this.price,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      image: image ?? this.image,
+      rating: rating ?? this.rating,
+    );
+  }
+
   Map<String, dynamic> toJson() => _$ProductModelToJson(this);
 
   @override
@@ -57,6 +77,16 @@ class RatingModel extends Equatable {
 
   final double rate;
   final int count;
+
+  RatingModel copyWith({
+    double? rate,
+    int? count,
+  }) {
+    return RatingModel(
+      rate: rate ?? this.rate,
+      count: count ?? this.count,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$RatingModelToJson(this);
 
