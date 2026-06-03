@@ -44,6 +44,11 @@ Do not clutter the top level with `lib/widget/` or `lib/model/`. Any component t
 *   **Bottom Sheets & Dialogs:**
     *   **Direct Mutation** (e.g., editing a field, toggling a filter that instantly changes the page behind it): Use a **Single Shared BLoC** via `BlocProvider.value(...)` when opening the sheet. The sheet directly dispatches events to the parent BLoC.
     *   **Isolated/Complex Flow** (e.g., a multi-step checkout or deep form inside the sheet only): Use a **Dedicated Bottom Sheet BLoC** via `BlocProvider(create: ...)`. If the parent page needs the final result, pass it back via `Navigator.pop(context, result)`.
+*   **Event Concurrency (`bloc_concurrency`):** **DO** use event transformers to control how events are processed:
+    *   `droppable()` — Ignores new events while one is still processing (prevent double-tap submit or duplicate fetches).
+    *   `restartable()` — Cancels the previous in-flight event and starts fresh (search-as-you-type, pull-to-refresh).
+    *   `sequential()` — Queues events and processes them one by one.
+*   **Global Observer (`AppBlocObserver`):** **DO** register a global `BlocObserver` in `main()` via `Bloc.observer = AppBlocObserver()`. It logs all events, transitions, and errors in debug mode only (`kDebugMode`). Placed in `lib/core/services/`.
 
 ## 3. Data Models & Serialization
 *   **DO NOT** manually write or paste `fromJson` / `toJson` methods.

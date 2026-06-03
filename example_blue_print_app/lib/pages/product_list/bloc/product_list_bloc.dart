@@ -1,3 +1,4 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:example_blue_print_app/pages/product_list/bloc/product_list_event.dart';
 import 'package:example_blue_print_app/pages/product_list/bloc/product_list_state.dart';
 import 'package:example_blue_print_app/shared/repositories/product_repository.dart';
@@ -11,12 +12,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///
 /// The repository returns `Either<Failure, List<ProductModel>>`,
 /// which is folded into success or failure states.
+///
+/// Uses `bloc_concurrency` transformers:
+/// - `droppable()` on fetch → ignores duplicate taps while loading.
+/// - `restartable()` on refresh → cancels stale refresh if
+///   the user pulls again.
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   ProductListBloc({required ProductRepository productRepository})
     : _productRepository = productRepository,
       super(const ProductListState()) {
-    on<ProductListFetchRequested>(_onFetchRequested);
-    on<ProductListRefreshRequested>(_onRefreshRequested);
+    on<ProductListFetchRequested>(
+      _onFetchRequested,
+      transformer: droppable(),
+    );
+    on<ProductListRefreshRequested>(
+      _onRefreshRequested,
+      transformer: restartable(),
+    );
   }
 
   final ProductRepository _productRepository;
