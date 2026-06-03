@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:example_blue_print_app/core/network/api_provider.dart';
 import 'package:example_blue_print_app/core/network/failure.dart';
-import 'package:example_blue_print_app/pages/product_list/model/product_model.dart';
+import 'package:example_blue_print_app/shared/models/product_model.dart';
 import 'package:fpdart/fpdart.dart';
 
 /// Repository for product-related API calls.
@@ -11,7 +11,7 @@ import 'package:fpdart/fpdart.dart';
 /// into success or failure states.
 class ProductRepository {
   ProductRepository({required ApiProvider apiProvider})
-      : _apiProvider = apiProvider;
+    : _apiProvider = apiProvider;
 
   final ApiProvider _apiProvider;
 
@@ -33,8 +33,9 @@ class ProductRepository {
   /// Fetches a single product by [id].
   Future<Either<Failure, ProductModel>> getProductById(int id) async {
     try {
-      final response =
-          await _apiProvider.dio.get<Map<String, dynamic>>('/products/$id');
+      final response = await _apiProvider.dio.get<Map<String, dynamic>>(
+        '/products/$id',
+      );
       final product = ProductModel.fromJson(response.data!);
       return Right(product);
     } on DioException catch (e) {

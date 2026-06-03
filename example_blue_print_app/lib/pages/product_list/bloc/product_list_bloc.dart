@@ -1,6 +1,6 @@
 import 'package:example_blue_print_app/pages/product_list/bloc/product_list_event.dart';
 import 'package:example_blue_print_app/pages/product_list/bloc/product_list_state.dart';
-import 'package:example_blue_print_app/pages/product_list/repository/product_repository.dart';
+import 'package:example_blue_print_app/shared/repositories/product_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// BLoC for the Product List feature.
@@ -13,8 +13,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 /// which is folded into success or failure states.
 class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
   ProductListBloc({required ProductRepository productRepository})
-      : _productRepository = productRepository,
-        super(const ProductListState()) {
+    : _productRepository = productRepository,
+      super(const ProductListState()) {
     on<ProductListFetchRequested>(_onFetchRequested);
     on<ProductListRefreshRequested>(_onRefreshRequested);
   }

@@ -1,5 +1,3 @@
-import 'package:example_blue_print_app/core/theme/app_colors.dart';
-import 'package:example_blue_print_app/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -45,9 +43,13 @@ class CustomButton extends StatelessWidget {
     final button = ElevatedButton(
       onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor ?? AppColors.primary,
-        foregroundColor: foregroundColor ?? Colors.white,
-        disabledBackgroundColor: AppColors.primaryLight,
+        backgroundColor:
+            backgroundColor ?? Theme.of(context).colorScheme.primary,
+        foregroundColor:
+            foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
+        disabledBackgroundColor: Theme.of(
+          context,
+        ).colorScheme.primary.withValues(alpha: 0.5),
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 14.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.r),
@@ -69,7 +71,7 @@ class CustomButton extends StatelessWidget {
                   Icon(icon, size: 18.r),
                   SizedBox(width: 8.w),
                 ],
-                Text(label, style: AppTypography.labelLarge),
+                Text(label, style: Theme.of(context).textTheme.labelLarge),
               ],
             ),
     );

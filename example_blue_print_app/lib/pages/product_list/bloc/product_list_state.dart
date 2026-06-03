@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:example_blue_print_app/pages/product_list/model/product_model.dart';
+import 'package:example_blue_print_app/shared/models/product_model.dart';
 
 /// Status enum for the BLoC state.
 ///

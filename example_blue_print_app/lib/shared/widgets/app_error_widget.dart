@@ -1,5 +1,3 @@
-import 'package:example_blue_print_app/core/theme/app_colors.dart';
-import 'package:example_blue_print_app/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -31,13 +29,15 @@ class AppErrorWidget extends StatelessWidget {
             Icon(
               Icons.error_outline_rounded,
               size: 64.r,
-              color: AppColors.error,
+              color: Theme.of(context).colorScheme.error,
             ),
             SizedBox(height: 16.h),
             Text(
               message,
-              style: AppTypography.bodyLarge.copyWith(
-                color: AppColors.textSecondaryLight,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Theme.of(
+                  context,
+                ).colorScheme.onSurface.withValues(alpha: 0.7),
               ),
               textAlign: TextAlign.center,
             ),

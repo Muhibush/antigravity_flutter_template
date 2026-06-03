@@ -17,6 +17,7 @@ If a widget is highly complex (e.g., a massive BottomSheet), it should become it
 Instead of dumping everything into a generic `utils/` folder, separate your infrastructure from your pure utilities:
 *   `lib/core/network/` - Contains the `ApiProvider`, Interceptors, and Dio setup.
 *   `lib/core/theme/` - Contains the Design System, Colors, Typography, and AppTheme.
+    *   **CRITICAL:** Always consume colors and typography via `Theme.of(context).colorScheme` and `Theme.of(context).textTheme`. **DO NOT** directly import and use `AppColors` or `AppTypography` in your widgets, as it breaks dark mode and dynamic theming.
 *   `lib/core/services/` - Third-party wrappers (Firebase, Analytics, Crashlytics, Local Storage/SharedPrefs).
 *   `lib/core/routing/` - GoRouter setup and Route Constants.
 
@@ -35,12 +36,19 @@ Do not clutter the top level with `lib/widget/` or `lib/model/`. Any component t
 
 ## 2. State Management (BLoC)
 *   **State Shape:** **DO NOT** use sealed classes or Freezed for state matching. **DO** use a single State class with an `enum` for status (e.g., `enum BlocStatus { initial, loading, success, failure }`) and a `copyWith` method. This allows you to retain data (like a list of items) while showing a loading spinner, which is the official `bloclibrary.dev` recommendation for complex apps.
+*   **Immutability (Lists):** **DO NOT** modify lists in place (e.g., `state.items.add(newItem)`). Equatable will ignore this. **DO** use the spread operator to create a new list instance (e.g., `emit(state.copyWith(items: [...state.items, newItem]));`).
 *   **Event Naming:** **DO** name events exactly as actions that happened in the past, using the format `Subject + Noun + PastTenseVerb` (e.g., `LoginButtonPressed`, `ProductsFetchRequested`). **DO NOT** use command-style names (like `FetchProducts`).
 *   **Business Logic:** Keep UI out of Blocs. Blocs should only receive events, call the Repository, and emit a new state using `copyWith`.
+*   **Render Optimization:** **DO** use `Builder` + `context.select` as the single, consistent pattern for all state listening — including page-level layout switching and granular UI updates. **DO NOT** use `BlocBuilder` or `BlocSelector`. Use `context.read` only for fire-and-forget actions (e.g., dispatching events from a button tap).
+*   **Side Effects:** **DO** use `BlocListener` for one-off side effects like navigation, showing dialogs, snackbars, or bottom sheets when the state changes. Never put navigation logic inside the BLoC class itself.
+*   **Bottom Sheets & Dialogs:**
+    *   **Direct Mutation** (e.g., editing a field, toggling a filter that instantly changes the page behind it): Use a **Single Shared BLoC** via `BlocProvider.value(...)` when opening the sheet. The sheet directly dispatches events to the parent BLoC.
+    *   **Isolated/Complex Flow** (e.g., a multi-step checkout or deep form inside the sheet only): Use a **Dedicated Bottom Sheet BLoC** via `BlocProvider(create: ...)`. If the parent page needs the final result, pass it back via `Navigator.pop(context, result)`.
 
 ## 3. Data Models & Serialization
 *   **DO NOT** manually write or paste `fromJson` / `toJson` methods.
 *   **DO** use `json_serializable` and `build_runner` for all data models. This ensures type safety and prevents runtime crashes due to malformed JSON.
+*   **Immutability (Nested Models):** **DO** add `copyWith` methods to all nested data models. When modifying a deeply nested property, you must create a new instance of every object up the chain to trigger UI rebuilds via `Equatable`.
 *   Models must include `part 'model_name.g.dart';` and the `@JsonSerializable()` annotation.
 
 ## 4. Linting & Code Quality

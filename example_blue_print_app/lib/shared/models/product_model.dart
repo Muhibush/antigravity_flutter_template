@@ -34,14 +34,14 @@ class ProductModel extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        price,
-        description,
-        category,
-        image,
-        rating,
-      ];
+    id,
+    title,
+    price,
+    description,
+    category,
+    image,
+    rating,
+  ];
 }
 
 /// Nested rating model for a product.

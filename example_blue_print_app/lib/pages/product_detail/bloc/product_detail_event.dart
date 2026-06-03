@@ -18,3 +18,9 @@ final class ProductDetailFetchRequested extends ProductDetailEvent {
   @override
   List<Object?> get props => [productId];
 }
+
+/// Fired when the user taps the counter button to increment it.
+/// Takes no parameters to prove Equatable does not drop duplicate events.
+final class ProductDetailCounterIncremented extends ProductDetailEvent {
+  const ProductDetailCounterIncremented();
+}

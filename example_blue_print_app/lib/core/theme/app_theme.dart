@@ -1,4 +1,5 @@
 import 'package:example_blue_print_app/core/theme/app_colors.dart';
+import 'package:example_blue_print_app/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 
 /// Builds the complete [ThemeData] for the application.
@@ -12,6 +13,7 @@ abstract class AppTheme {
         primary: AppColors.primary,
         onSurface: AppColors.textPrimaryLight,
       ),
+      textTheme: _textTheme,
       scaffoldBackgroundColor: AppColors.backgroundLight,
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.primary,
@@ -53,6 +55,7 @@ abstract class AppTheme {
         error: AppColors.error,
         onSurface: AppColors.textPrimaryDark,
       ),
+      textTheme: _textTheme,
       scaffoldBackgroundColor: AppColors.backgroundDark,
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.primaryDark,
@@ -81,6 +84,21 @@ abstract class AppTheme {
         color: AppColors.dividerDark,
         thickness: 1,
       ),
+    );
+  }
+
+  static TextTheme get _textTheme {
+    return TextTheme(
+      displayLarge: AppTypography.heading1,
+      displayMedium: AppTypography.heading2,
+      displaySmall: AppTypography.heading3,
+      bodyLarge: AppTypography.bodyLarge,
+      bodyMedium: AppTypography.bodyMedium,
+      bodySmall: AppTypography.bodySmall,
+      labelLarge: AppTypography.labelLarge,
+      labelSmall: AppTypography.labelSmall,
+      labelMedium: AppTypography.caption,
+      titleLarge: AppTypography.price,
     );
   }
 }

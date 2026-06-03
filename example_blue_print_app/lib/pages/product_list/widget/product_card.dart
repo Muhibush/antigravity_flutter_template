@@ -1,6 +1,4 @@
-import 'package:example_blue_print_app/core/theme/app_colors.dart';
-import 'package:example_blue_print_app/core/theme/app_typography.dart';
-import 'package:example_blue_print_app/pages/product_list/model/product_model.dart';
+import 'package:example_blue_print_app/shared/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -41,13 +39,15 @@ class ProductCard extends StatelessWidget {
                     width: 80.w,
                     height: 80.w,
                     decoration: BoxDecoration(
-                      color: AppColors.backgroundLight,
+                      color: Theme.of(context).scaffoldBackgroundColor,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: Icon(
                       Icons.image_not_supported_outlined,
                       size: 32.r,
-                      color: AppColors.textSecondaryLight,
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withValues(alpha: 0.6),
                     ),
                   ),
                 ),
@@ -61,7 +61,7 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       product.title,
-                      style: AppTypography.bodyMedium.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontWeight: FontWeight.w600,
                       ),
                       maxLines: 2,
@@ -70,8 +70,8 @@ class ProductCard extends StatelessWidget {
                     SizedBox(height: 4.h),
                     Text(
                       product.category.toUpperCase(),
-                      style: AppTypography.labelSmall.copyWith(
-                        color: AppColors.primary,
+                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     SizedBox(height: 8.h),
@@ -80,21 +80,22 @@ class ProductCard extends StatelessWidget {
                       children: [
                         Text(
                           '\$${product.price.toStringAsFixed(2)}',
-                          style: AppTypography.price.copyWith(
-                            color: AppColors.primaryDark,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                         ),
                         Row(
                           children: [
                             Icon(
                               Icons.star_rounded,
                               size: 16.r,
-                              color: AppColors.warning,
+                              color: Colors.amber,
                             ),
                             SizedBox(width: 4.w),
                             Text(
                               '${product.rating.rate}',
-                              style: AppTypography.caption,
+                              style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ],
                         ),
@@ -109,7 +110,9 @@ class ProductCard extends StatelessWidget {
                 padding: EdgeInsets.only(left: 8.w),
                 child: Icon(
                   Icons.chevron_right_rounded,
-                  color: AppColors.textSecondaryLight,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.6),
                   size: 24.r,
                 ),
               ),

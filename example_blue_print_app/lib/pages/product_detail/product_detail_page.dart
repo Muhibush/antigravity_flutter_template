@@ -1,10 +1,8 @@
 import 'package:example_blue_print_app/core/network/api_provider.dart';
-import 'package:example_blue_print_app/core/theme/app_colors.dart';
-import 'package:example_blue_print_app/core/theme/app_typography.dart';
 import 'package:example_blue_print_app/pages/product_detail/bloc/product_detail_bloc.dart';
 import 'package:example_blue_print_app/pages/product_detail/bloc/product_detail_event.dart';
 import 'package:example_blue_print_app/pages/product_detail/bloc/product_detail_state.dart';
-import 'package:example_blue_print_app/pages/product_list/repository/product_repository.dart';
+import 'package:example_blue_print_app/shared/repositories/product_repository.dart';
 import 'package:example_blue_print_app/shared/widgets/app_error_widget.dart';
 import 'package:example_blue_print_app/shared/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
@@ -51,20 +49,51 @@ class _ProductDetailView extends StatelessWidget {
                 onRetry: () {
                   if (state.product != null) {
                     context.read<ProductDetailBloc>().add(
-                          ProductDetailFetchRequested(
-                            productId: state.product!.id,
-                          ),
-                        );
+                      ProductDetailFetchRequested(
+                        productId: state.product!.id,
+                      ),
+                    );
                   }
                 },
               );
             case ProductDetailStatus.success:
               final product = state.product!;
+              print('🔄 UI Rebuilt! Counter is now: ${state.counter}');
               return SingleChildScrollView(
                 padding: EdgeInsets.all(16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // ── Counter Demo ──
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(16.w),
+                      decoration: BoxDecoration(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Counter: ${state.counter}',
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
+                          SizedBox(height: 8.h),
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<ProductDetailBloc>().add(
+                                const ProductDetailCounterIncremented(),
+                              );
+                            },
+                            child: const Text('Increment Counter'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 24.h),
+
                     // ── Product Image ──
                     Center(
                       child: Container(
@@ -89,20 +118,25 @@ class _ProductDetailView extends StatelessWidget {
                         vertical: 6.h,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.1),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Text(
                         product.category.toUpperCase(),
-                        style: AppTypography.labelSmall.copyWith(
-                          color: AppColors.primary,
+                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
                     SizedBox(height: 12.h),
 
                     // ── Title ──
-                    Text(product.title, style: AppTypography.heading2),
+                    Text(
+                      product.title,
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
                     SizedBox(height: 16.h),
 
                     // ── Price & Rating Row ──
@@ -111,30 +145,36 @@ class _ProductDetailView extends StatelessWidget {
                       children: [
                         Text(
                           '\$${product.price.toStringAsFixed(2)}',
-                          style: AppTypography.heading1.copyWith(
-                            color: AppColors.primaryDark,
-                          ),
+                          style: Theme.of(context).textTheme.displayLarge!
+                              .copyWith(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                         ),
                         Row(
                           children: [
                             Icon(
                               Icons.star_rounded,
                               size: 20.r,
-                              color: AppColors.warning,
+                              color: Colors.amber,
                             ),
                             SizedBox(width: 4.w),
                             Text(
                               '${product.rating.rate}',
-                              style: AppTypography.bodyLarge.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: Theme.of(context).textTheme.bodyLarge!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
                             ),
                             SizedBox(width: 4.w),
                             Text(
                               '(${product.rating.count} reviews)',
-                              style: AppTypography.caption.copyWith(
-                                color: AppColors.textSecondaryLight,
-                              ),
+                              style: Theme.of(context).textTheme.labelMedium!
+                                  .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withValues(alpha: 0.6),
+                                  ),
                             ),
                           ],
                         ),
@@ -143,12 +183,17 @@ class _ProductDetailView extends StatelessWidget {
                     SizedBox(height: 24.h),
 
                     // ── Description ──
-                    Text('Description', style: AppTypography.heading3),
+                    Text(
+                      'Description',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
                     SizedBox(height: 8.h),
                     Text(
                       product.description,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: AppColors.textSecondaryLight,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withValues(alpha: 0.6),
                       ),
                     ),
                   ],

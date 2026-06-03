@@ -28,8 +28,7 @@ class Failure extends Equatable {
         return const Failure(message: 'Request was cancelled.');
       case DioExceptionType.connectionError:
         return const Failure(
-          message:
-              'No internet connection. Please check your network.',
+          message: 'No internet connection. Please check your network.',
         );
       case DioExceptionType.unknown:
       case DioExceptionType.badCertificate:

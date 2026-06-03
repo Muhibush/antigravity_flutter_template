@@ -1,4 +1,3 @@
-import 'package:example_blue_print_app/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 /// A reusable loading overlay that displays a centered spinner
@@ -20,9 +19,9 @@ class LoadingOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       color: Colors.black.withValues(alpha: 0.3),
-      child: const Center(
+      child: Center(
         child: CircularProgressIndicator(
-          color: AppColors.primary,
+          color: Theme.of(context).colorScheme.primary,
         ),
       ),
     );

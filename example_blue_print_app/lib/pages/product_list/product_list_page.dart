@@ -3,8 +3,8 @@ import 'package:example_blue_print_app/core/routing/route_constants.dart';
 import 'package:example_blue_print_app/pages/product_list/bloc/product_list_bloc.dart';
 import 'package:example_blue_print_app/pages/product_list/bloc/product_list_event.dart';
 import 'package:example_blue_print_app/pages/product_list/bloc/product_list_state.dart';
-import 'package:example_blue_print_app/pages/product_list/repository/product_repository.dart';
 import 'package:example_blue_print_app/pages/product_list/widget/product_card.dart';
+import 'package:example_blue_print_app/shared/repositories/product_repository.dart';
 import 'package:example_blue_print_app/shared/widgets/app_error_widget.dart';
 import 'package:example_blue_print_app/shared/widgets/loading_overlay.dart';
 import 'package:flutter/material.dart';
@@ -50,16 +50,16 @@ class _ProductListView extends StatelessWidget {
             case BlocStatus.failure:
               return AppErrorWidget(
                 message: state.errorMessage,
-                onRetry: () => context
-                    .read<ProductListBloc>()
-                    .add(const ProductListFetchRequested()),
+                onRetry: () => context.read<ProductListBloc>().add(
+                  const ProductListFetchRequested(),
+                ),
               );
             case BlocStatus.success:
               return RefreshIndicator(
                 onRefresh: () async {
-                  context
-                      .read<ProductListBloc>()
-                      .add(const ProductListRefreshRequested());
+                  context.read<ProductListBloc>().add(
+                    const ProductListRefreshRequested(),
+                  );
                 },
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: 8),

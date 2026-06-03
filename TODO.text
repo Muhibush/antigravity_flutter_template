@@ -1,0 +1,18 @@
+I have 8 Knowledge Items loaded for your antigravity_flutter_template project. They form a comprehensive "Flutter Blueprint" for how this project should be built:
+
+BLoC State Management: Enforces a single State class with status enums and copyWith. Events must follow Subject+Noun+PastTenseVerb naming, and BLoCs should only handle logic and emit states, not contain UI logic.
+Project Structure (Feature-First): Features are organized under lib/pages/<feature_name>/ (with bloc, model, repo, widget subfolders). Core infrastructure is in lib/core/, utilities in lib/utils/, and shared components in lib/shared/.
+Localization & Flavors: Uses flutter_localizations with .arb files. Flavors are managed via flutter_flavorizr with three environments (dev, staging, prod), each having its own entry point and configuration.
+Linting & Code Quality: Uses the strict very_good_analysis ruleset (from the creators of Bloc) instead of standard flutter lints. Generated files are excluded from analysis.
+UI & Responsiveness (Phone First): Uses flutter_screenutil for pixel-perfect designs based on a 375x812 (iPhone X) canvas. The app is locked to Portrait mode for both Android and iOS.
+Routing (GoRouter + Deep Links): Uses go_router for declarative routing and deep linking, centralizing route paths in a RouteConstants class.
+Data Models & Serialization: Uses json_serializable, build_runner, and Equatable for models. Manual fromJson/toJson methods are avoided in favor of generated code.
+Networking (Dio + Either Pattern): Uses Dio for HTTP requests and wraps repository responses in Either<Failure, SuccessData> using fpdart. The BLoC folds these responses into states.
+
+- unit test
+- widget test
+- integration test
+- handle global network error like 400,500 etc
+
+- make template / code generation
+- steroid bloc with replay_bloc, hydrated_bloc,bloc_tools,bloc_test, bloc_concurrency, and etc
