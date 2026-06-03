@@ -25,7 +25,7 @@ Instead of dumping everything into a generic `utils/` folder, separate your infr
 The `utils/` folder should be strictly reserved for pure functions and extensions that have no dependencies:
 *   `lib/utils/extensions/` - `string_extension.dart`, `num_extension.dart`, `iterable_extension.dart`.
 *   `lib/utils/formatters/` - Custom TextInputFormatters (e.g., `no_leading_zero_formatter.dart`).
-*   `lib/utils/constants/` - Global enums and string constants.
+*   `lib/utils/constants/` - Global enums and string constants. **DO NOT** hardcode keys like `'access_token'` across the codebase. Centralize them here (e.g. `StorageConstants`).
 
 ### Global & Shared Components (`lib/shared/`)
 Do not clutter the top level with `lib/widget/` or `lib/model/`. Any component that is used across multiple features must be placed in the `shared/` directory:
@@ -62,6 +62,7 @@ Do not clutter the top level with `lib/widget/` or `lib/model/`. Any component t
 
 ## 4. Networking (Dio + Either Pattern)
 *   **DO** use `Dio` with interceptors (Request, Error, Retry via `dio_smart_retry`).
+*   **DO** use a `QueuedInterceptor` (e.g. `AuthInterceptor`) to handle Bearer tokens and 401 Unauthorized errors. It must pause outgoing requests, refresh the token via Secure Storage, and retry the paused requests seamlessly to prevent race conditions.
 *   **DO NOT** throw raw exceptions from the Repository to the Bloc.
 *   **DO** wrap repository responses in an `Either` or `Result` pattern (using `fpdart`'s `Either<Failure, SuccessData>`). 
 *   The Bloc should receive the `Either` and `fold()` it into a success or failure state.
@@ -72,9 +73,10 @@ Do not clutter the top level with `lib/widget/` or `lib/model/`. Any component t
 *   **Android Safety (Foldables/Tablets):** In `android/app/src/main/AndroidManifest.xml`, set `android:resizeableActivity="false"` and `android:screenOrientation="portrait"`. This prevents Android 12L+ and foldables from forcing your app into split-screen or bizarre aspect ratios, keeping it safe on the Play Store.
 *   **iOS Safety (Tablets):** **DO NOT** target iPads unless explicitly required. When building for production, open the iOS `Runner.xcworkspace` and **uncheck iPad** under Deployment Info so the app runs in iPhone compatibility mode with black borders.
 
-## 6. Localization & Flavors
+## 6. Localization, Flavors & Environments
 *   **Localization:** Use `flutter_localizations` with standard `.arb` files (`app_en.arb`, `app_id.arb`).
 *   **Flavors:** Use native flavors (Android ProductFlavors & iOS Schemes) managed via `flutter_flavorizr`.
+*   **Environment Variables:** **DO NOT** hardcode API keys or use unencrypted `.env` packages for secrets. **DO** pass environment variables securely at compile-time using `--dart-define-from-file=env_dev.json` and access them via `String.fromEnvironment()` inside a centralized `Env` class.
 
 ---
 *Auto-generated during the /grill-me session to enforce consistency across all projects.*

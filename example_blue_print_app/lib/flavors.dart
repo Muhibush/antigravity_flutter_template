@@ -26,16 +26,4 @@ class F {
         return 'BlueprintApp';
     }
   }
-
-  /// Base URL for the API, varies by flavor.
-  static String get baseUrl {
-    switch (appFlavor) {
-      case Flavor.dev:
-        return 'https://fakestoreapi.com';
-      case Flavor.staging:
-        return 'https://fakestoreapi.com';
-      case Flavor.prod:
-        return 'https://fakestoreapi.com';
-    }
-  }
 }

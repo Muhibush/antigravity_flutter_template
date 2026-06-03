@@ -1,20 +1,27 @@
-I have 8 Knowledge Items loaded for your antigravity_flutter_template project. They form a comprehensive "Flutter Blueprint" for how this project should be built:
+### Phase 1: Lock Down the Infrastructure (Do this first)
+These are fundamental to how the app communicates with the outside world.
+1. **env handle**: Set up environment variables (e.g., using `flutter_dotenv` or passing them through your existing flavors). You need this before doing complex networking.
+2. **handle global network error (400, 500)**: Implement a global error handler or interceptor so every BLoC doesn't have to manually check for `500 Server Error`.
+3. **handle bearer and refresh token**: Implement the `QueuedInterceptor` in Dio. This is the hardest networking task. When a token expires, you need to pause all outgoing requests, refresh the token, and then resume them.
 
-BLoC State Management: Enforces a single State class with status enums and copyWith. Events must follow Subject+Noun+PastTenseVerb naming, and BLoCs should only handle logic and emit states, not contain UI logic.
-Project Structure (Feature-First): Features are organized under lib/pages/<feature_name>/ (with bloc, model, repo, widget subfolders). Core infrastructure is in lib/core/, utilities in lib/utils/, and shared components in lib/shared/.
-Localization & Flavors: Uses flutter_localizations with .arb files. Flavors are managed via flutter_flavorizr with three environments (dev, staging, prod), each having its own entry point and configuration.
-Linting & Code Quality: Uses the strict very_good_analysis ruleset (from the creators of Bloc) instead of standard flutter lints. Generated files are excluded from analysis.
-UI & Responsiveness (Phone First): Uses flutter_screenutil for pixel-perfect designs based on a 375x812 (iPhone X) canvas. The app is locked to Portrait mode for both Android and iOS.
-Routing (GoRouter + Deep Links): Uses go_router for declarative routing and deep linking, centralizing route paths in a RouteConstants class.
-Data Models & Serialization: Uses json_serializable, build_runner, and Equatable for models. Manual fromJson/toJson methods are avoided in favor of generated code.
-Networking (Dio + Either Pattern): Uses Dio for HTTP requests and wraps repository responses in Either<Failure, SuccessData> using fpdart. The BLoC folds these responses into states.
+### Phase 2: BLoC Steroids
+Now that your data layer is perfect, upgrade your state management.
+4. **steroid bloc**: 
+   - Add `hydrated_bloc` so state persists across app restarts (great for offline caching).
+   - Add `bloc_concurrency` to easily handle debounce/throttle on search fields.
+   - Set up `bloc_observer` for global logging.
 
-- unit test
-- widget test
-- integration test
-- handle global network error like 400,500 etc
+### Phase 3: Quality Assurance (Testing)
+Now that your architecture is 100% complete and won't change, write your tests.
+5. **unit test**: Test your BLoCs using `bloc_test` and your repositories using `mocktail`.
+6. **widget test**: Test your UI using `mocktail_image_network`.
+7. **integration test**: Write the end-to-end flow using the native `integration_test` package.
 
-- make template / code generation
-- steroid bloc with replay_bloc, hydrated_bloc,bloc_tools,bloc_test, bloc_concurrency, and etc
-- readme to flutter blue print. link to how to use
+### Phase 4: DX (Developer Experience)
+Once the blueprint is flawlessly working and tested, turn it into a product for your team.
+8. **make template / code generation**: Create a Mason brick (`mason_cli`) so developers can run `mason make feature` and instantly generate the folders, bloc, model, and page.
+9. **readme to flutter blue print**: Write the final documentation explaining how to use all the awesome stuff you just built.
 
+---
+
+Does this order make sense to you? If so, we can start with **env handle** right now!
