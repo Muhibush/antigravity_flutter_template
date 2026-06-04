@@ -1,14 +1,4 @@
-### Phase 4: DX (Developer Experience)
-Once the blueprint is flawlessly working and tested, turn it into a product for your team.
-8. **make template / code generation**: Create a Mason brick (`mason_cli`) so developers can run `mason make feature` and instantly generate the folders, bloc, model, and page.
-9. **readme to flutter blue print**: Write the final documentation explaining how to use all the awesome stuff you just built.
-
----
-
-Does this order make sense to you? If so, we can start with **env handle** right now!
-
-====
-
 - mason generator
 - can be the kis standalone? i saw thares some path that refer to this project
 - review all the kis and the blueprint final
+- manual flow to add feature based on the blueprint. after generate the tamplate
