@@ -28,7 +28,7 @@ lib/
 
 ## 🚀 Getting Started
 
-This repository contains a fully working example app (`example_blue_print_app`) that fetches products from a fake API, demonstrating all architectural concepts perfectly.
+This repository contains a fully working example app (`antigravity_app`) that fetches products from a fake API, demonstrating all architectural concepts perfectly.
 
 ### Prerequisites
 * Flutter SDK (latest stable)
@@ -38,7 +38,7 @@ This repository contains a fully working example app (`example_blue_print_app`) 
 
 1. **Install dependencies**
    ```bash
-   cd example_blue_print_app
+   cd antigravity_app
    flutter pub get
    ```
 
@@ -129,5 +129,26 @@ Because we value safety and strict dependency injection over brittle code-genera
 
 You are now ready to start writing your UI and business logic!
 
----
+## 🚀 Starting a New Project
+
+When you click "Use this template" on GitHub and clone your new repository, the internal package name is still `antigravity_app`. 
+
+You must rename the package and Native bundle IDs before writing code. We highly recommend using the community [`rename`](https://pub.dev/packages/rename) CLI tool to do this instantly and safely.
+
+### 1. Install Rename
+```bash
+dart pub global activate rename
+```
+
+### 2. Set your App Name
+This changes the display name on the user's home screen.
+```bash
+rename setAppName --targets ios,android,macos,linux,windows --value "My Awesome App"
+```
+
+### 3. Set your Bundle ID
+This safely replaces `com.example.antigravityApp` with your actual organization bundle identifier across all native code and Dart imports.
+```bash
+rename setBundleId --targets ios,android,macos,linux,windows --value "com.mycompany.myapp"
+```
 *Built with ❤️ by the Antigravity Architecture Team.*
