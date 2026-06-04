@@ -71,5 +71,63 @@ flutter test
 flutter test integration_test/app_test.dart
 ```
 
+## 🧱 Creating a New Feature
+
+This project uses `mason_cli` to instantly generate the massive amount of boilerplate required for a strict feature-first architecture. By using this generator, you ensure that every new feature perfectly aligns with the Antigravity Flutter Blueprint.
+
+### 1. Setup in your Project
+
+Because the generator is standalone, you need to add it to your project via a `mason.yaml` file. 
+
+Create a `mason.yaml` in the root of your project:
+```yaml
+bricks:
+  feature:
+    git:
+      url: https://github.com/Muhibush/antigravity_mason_bricks.git
+      path: feature
+```
+
+Then, fetch the brick:
+```bash
+mason get
+```
+
+### 2. Generate the Boilerplate
+
+When you need to build a new screen (e.g., a "Profile Settings" page), run the `feature` brick:
+```bash
+mason make feature --feature_name profile_settings
+```
+
+This will automatically create the following structure:
+```text
+lib/pages/profile_settings/
+├── bloc/
+│   ├── profile_settings_bloc.dart
+│   ├── profile_settings_event.dart
+│   └── profile_settings_state.dart
+├── model/
+│   └── profile_settings_model.dart
+├── repository/
+│   └── profile_settings_repository.dart
+├── widget/
+│   └── profile_settings_body.dart
+└── profile_settings_page.dart
+```
+
+### 3. Manual Wiring Flow
+
+Because we value safety and strict dependency injection over brittle code-generation regex, you must manually wire up the generated feature to the rest of the app:
+
+1. **Routing**: Open `lib/core/routing/route_constants.dart` (or your GoRouter config file) and add the new route path (`/profile-settings`). Then map the route to the generated `ProfileSettingsPage`.
+2. **Dependency Injection**: Open the generated `profile_settings_page.dart`. The `BlocProvider` has a `TODO` comment reminding you to inject your real `Dio` instance (or `ApiProvider`) into the Repository.
+3. **Serialization**: Open a terminal and run the build runner to generate the `.g.dart` serialization file for the new data model:
+   ```bash
+   dart run build_runner build --delete-conflicting-outputs
+   ```
+
+You are now ready to start writing your UI and business logic!
+
 ---
 *Built with ❤️ by the Antigravity Architecture Team.*
