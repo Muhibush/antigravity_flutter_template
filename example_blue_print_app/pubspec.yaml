@@ -33,6 +33,9 @@ dependencies:
   dio: ^5.9.2
   dio_smart_retry: ^7.0.1
   equatable: ^2.0.8
+  firebase_analytics: ^12.4.2
+  firebase_core: ^4.10.0
+  firebase_crashlytics: ^5.2.3
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1

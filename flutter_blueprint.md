@@ -90,5 +90,10 @@ Do not clutter the top level with `lib/widget/` or `lib/model/`. Any component t
 *   **Widget Tests:** **DO** mock the BLoC using `MockBloc` (from `bloc_test`) to force specific states (loading, success, failure) and verify the UI renders correctly without hitting real APIs.
 *   **Integration Tests:** **DO** write end-to-end tests in `integration_test/` that mount the full `App` widget, hit real (or staging) APIs, and verify full user flows using `pumpAndSettle()`.
 
+## 10. Analytics & Crash Reporting
+*   **DO NOT** directly use `FirebaseAnalytics.instance` or `FirebaseCrashlytics.instance` throughout your UI or BLoCs. This tightly couples your app to Firebase and makes it hard to swap to Mixpanel/Amplitude or mock during testing.
+*   **DO** abstract them behind generic interfaces (e.g., `AnalyticsService` and `CrashReportingService`).
+*   **DO** inject these services into your global `AppBlocObserver`. This allows you to automatically log every `onEvent` as an analytics event and report every `onError` to Crashlytics without writing boilerplate in every single BLoC.
+
 ---
 *Auto-generated during the /grill-me session to enforce consistency across all projects.*
