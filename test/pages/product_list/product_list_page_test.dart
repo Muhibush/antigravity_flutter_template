@@ -1,8 +1,8 @@
-import 'package:bloc_test/bloc_test.dart';
 import 'package:antigravity_app/pages/product_list/bloc/product_list_bloc.dart';
 import 'package:antigravity_app/pages/product_list/bloc/product_list_event.dart';
 import 'package:antigravity_app/pages/product_list/bloc/product_list_state.dart';
 import 'package:antigravity_app/shared/widgets/loading_overlay.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

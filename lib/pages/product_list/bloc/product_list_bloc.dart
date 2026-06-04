@@ -1,7 +1,7 @@
-import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:antigravity_app/pages/product_list/bloc/product_list_event.dart';
 import 'package:antigravity_app/pages/product_list/bloc/product_list_state.dart';
 import 'package:antigravity_app/shared/repositories/product_repository.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// BLoC for the Product List feature.

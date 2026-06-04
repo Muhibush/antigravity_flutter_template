@@ -1,5 +1,5 @@
-import 'package:equatable/equatable.dart';
 import 'package:antigravity_app/shared/models/product_model.dart';
+import 'package:equatable/equatable.dart';
 
 /// Status enum for the BLoC state.
 ///

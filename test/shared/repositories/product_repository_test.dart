@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:antigravity_app/core/network/api_provider.dart';
 import 'package:antigravity_app/core/network/failure.dart';
 import 'package:antigravity_app/shared/repositories/product_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

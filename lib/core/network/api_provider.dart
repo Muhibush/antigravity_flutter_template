@@ -1,8 +1,8 @@
-import 'package:dio/dio.dart';
-import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:antigravity_app/core/env/env.dart';
 import 'package:antigravity_app/core/network/api_interceptor.dart';
 import 'package:antigravity_app/core/network/auth_interceptor.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 
 /// Centralized API provider that configures Dio with interceptors.
 ///

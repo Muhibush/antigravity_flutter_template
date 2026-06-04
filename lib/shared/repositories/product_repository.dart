@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:antigravity_app/core/network/api_provider.dart';
 import 'package:antigravity_app/core/network/failure.dart';
 import 'package:antigravity_app/shared/models/product_model.dart';
+import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 
 /// Repository for product-related API calls.

@@ -4,7 +4,7 @@ The **Antigravity Flutter Template** is a production-ready, highly opinionated b
 
 ## 📖 The Blueprint
 
-This template is strictly governed by the [Flutter Blueprint](flutter_blueprint.md). 
+This template is strictly governed by the [Flutter Blueprint](doc/flutter_blueprint.md). 
 **Before contributing to this project, you MUST read the Blueprint.** It covers the non-negotiable rules for:
 1. Feature-First Project Structure
 2. BLoC State Management (`flutter_bloc`, `bloc_concurrency`)
@@ -28,7 +28,7 @@ lib/
 
 ## 🚀 Getting Started
 
-This repository contains a fully working example app (`antigravity_app`) that fetches products from a fake API, demonstrating all architectural concepts perfectly.
+This template is a fully working Flutter app that fetches products from a fake API, demonstrating all architectural concepts perfectly.
 
 ### Prerequisites
 * Flutter SDK (latest stable)
@@ -38,16 +38,23 @@ This repository contains a fully working example app (`antigravity_app`) that fe
 
 1. **Install dependencies**
    ```bash
-   cd antigravity_app
    flutter pub get
    ```
 
-2. **Generate serialization code**
+2. **Set up environment files**
+   Copy the example env file and fill in your real credentials:
+   ```bash
+   cp env_dev.example.json env_dev.json
+   cp env_dev.example.json env_staging.json
+   cp env_dev.example.json env_prod.json
+   ```
+
+3. **Generate serialization code**
    ```bash
    dart run build_runner build --delete-conflicting-outputs
    ```
 
-3. **Run a specific flavor & environment**
+4. **Run a specific flavor & environment**
    The project uses `--dart-define-from-file` to securely inject secrets (never hardcode API keys!).
    ```bash
    # Run the Dev environment
