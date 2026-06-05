@@ -176,13 +176,29 @@ rename setBundleId --targets ios,android,macos,linux,windows --value "com.mycomp
 ```
 
 ### 4. Setup your Icons & Splash Screen
-The template is pre-configured with `flutter_launcher_icons` and `flutter_native_splash`.
-1. Place your transparent logo at `assets/images/app_icon.png`.
-2. Place your splash logo at `assets/images/splash_logo.png`.
-3. Run the generators:
+The template is pre-configured with `flutter_launcher_icons` and `flutter_native_splash` for all 3 flavors (`dev`, `staging`, `prod`).
+
+1. Place your transparent logos in `assets/images/`:
+   - `app_icon.png` (Prod)
+   - `app_icon_dev.png` (Dev)
+   - `app_icon_staging.png` (Staging)
+2. Place your splash logos in `assets/images/`:
+   - `splash_logo.png` (Prod)
+   - `splash_logo_dev.png` (Dev)
+   - `splash_logo_staging.png` (Staging)
+3. Run the generators for each flavor:
 ```bash
-dart run flutter_launcher_icons
-dart run flutter_native_splash:create
+# Prod
+dart run flutter_launcher_icons -f flutter_launcher_icons-prod.yaml
+dart run flutter_native_splash:create --flavor prod
+
+# Staging
+dart run flutter_launcher_icons -f flutter_launcher_icons-staging.yaml
+dart run flutter_native_splash:create --flavor staging
+
+# Dev
+dart run flutter_launcher_icons -f flutter_launcher_icons-dev.yaml
+dart run flutter_native_splash:create --flavor dev
 ```
 
 *Built with ❤️ by the Antigravity Architecture Team.*

@@ -1,0 +1,16 @@
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/images/splash_logo_dev.png"
+  android: true
+  ios: true
+  web: false
+
+  # Dark mode specific config
+  color_dark: "#000000"
+  image_dark: "assets/images/splash_logo_dev.png"
+
+  android_12:
+    image: "assets/images/splash_logo_dev.png"
+    icon_background_color: "#ffffff"
+    image_dark: "assets/images/splash_logo_dev.png"
+    icon_background_color_dark: "#000000"
