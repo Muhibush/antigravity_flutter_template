@@ -10,7 +10,7 @@ class AuthInterceptor extends Interceptor {
   AuthInterceptor({required this.dio});
 
   final Dio dio;
-  
+
   final _secureStorage = const FlutterSecureStorage();
 
   bool _isRefreshing = false;
@@ -39,8 +39,8 @@ class AuthInterceptor extends Interceptor {
     }
 
     // IF WE ARE ALREADY REFRESHING:
-    // This happens if 5 APIs fail at the exact same time. 
-    // The first one triggers the refresh. The other 4 land here. 
+    // This happens if 5 APIs fail at the exact same time.
+    // The first one triggers the refresh. The other 4 land here.
     // We put them in a queue to WAIT.
     if (_isRefreshing) {
       final completer = Completer<bool>();
@@ -93,7 +93,7 @@ class AuthInterceptor extends Interceptor {
       }
       _requestsQueue.clear();
       _isRefreshing = false;
-      
+
       await _secureStorage.deleteAll();
       // GlobalAuthEventBus.logout(); // Trigger your app's global logout here!
 
@@ -128,10 +128,10 @@ class AuthInterceptor extends Interceptor {
       //   '/auth/refresh',
       //   data: {'refresh_token': refreshToken},
       // );
-      
+
       // Simulate network delay for example purposes
       await Future<void>.delayed(const Duration(seconds: 1));
-      
+
       // Save new tokens to SecureStorage
       await _secureStorage.write(
         key: StorageConstants.accessToken,
@@ -141,7 +141,7 @@ class AuthInterceptor extends Interceptor {
         key: StorageConstants.refreshToken,
         value: 'new_refresh_123',
       );
-      
+
       return true;
     } on Exception catch (_) {
       return false;

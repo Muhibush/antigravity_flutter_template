@@ -25,8 +25,7 @@ void main() {
     group('ProductListFetchRequested', () {
       blocTest<ProductListBloc, ProductListState>(
         'emits [loading, success] when getProducts succeeds',
-        setUp: () =>
-            mockProductRepository.stubGetProductsSuccess(),
+        setUp: () => mockProductRepository.stubGetProductsSuccess(),
         build: () => ProductListBloc(
           productRepository: mockProductRepository,
         ),
@@ -46,8 +45,7 @@ void main() {
 
       blocTest<ProductListBloc, ProductListState>(
         'emits [loading, failure] when getProducts fails',
-        setUp: () =>
-            mockProductRepository.stubGetProductsFailure(
+        setUp: () => mockProductRepository.stubGetProductsFailure(
           'Network error',
         ),
         build: () => ProductListBloc(
@@ -72,8 +70,7 @@ void main() {
       blocTest<ProductListBloc, ProductListState>(
         'emits [success] when refresh succeeds '
         '(no loading state for refresh)',
-        setUp: () =>
-            mockProductRepository.stubGetProductsSuccess(),
+        setUp: () => mockProductRepository.stubGetProductsSuccess(),
         build: () => ProductListBloc(
           productRepository: mockProductRepository,
         ),

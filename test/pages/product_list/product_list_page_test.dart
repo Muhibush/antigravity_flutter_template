@@ -12,8 +12,7 @@ import 'package:mocktail/mocktail.dart';
 import '../../helpers/test_helpers.dart';
 
 /// A mock BLoC so we can control the state the widget sees.
-class MockProductListBloc
-    extends MockBloc<ProductListEvent, ProductListState>
+class MockProductListBloc extends MockBloc<ProductListEvent, ProductListState>
     implements ProductListBloc {}
 
 void main() {
@@ -137,10 +136,9 @@ class _TestableProductListBody extends StatelessWidget {
                 children: [
                   Text(state.errorMessage),
                   ElevatedButton(
-                    onPressed: () =>
-                        context.read<ProductListBloc>().add(
-                              const ProductListFetchRequested(),
-                            ),
+                    onPressed: () => context.read<ProductListBloc>().add(
+                      const ProductListFetchRequested(),
+                    ),
                     child: const Text('Retry'),
                   ),
                 ],
