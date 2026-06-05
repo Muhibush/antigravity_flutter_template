@@ -93,6 +93,22 @@ bricks:
     git:
       url: https://github.com/Muhibush/antigravity_mason_bricks.git
       path: feature
+  model:
+    git:
+      url: https://github.com/Muhibush/antigravity_mason_bricks.git
+      path: model
+  repository:
+    git:
+      url: https://github.com/Muhibush/antigravity_mason_bricks.git
+      path: repository
+  bloc:
+    git:
+      url: https://github.com/Muhibush/antigravity_mason_bricks.git
+      path: bloc
+  cubit:
+    git:
+      url: https://github.com/Muhibush/antigravity_mason_bricks.git
+      path: cubit
 ```
 
 Then, fetch the brick:
