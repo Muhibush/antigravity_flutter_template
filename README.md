@@ -174,4 +174,15 @@ This safely replaces `com.example.antigravityApp` with your actual organization 
 ```bash
 rename setBundleId --targets ios,android,macos,linux,windows --value "com.mycompany.myapp"
 ```
+
+### 4. Setup your Icons & Splash Screen
+The template is pre-configured with `flutter_launcher_icons` and `flutter_native_splash`.
+1. Place your transparent logo at `assets/images/app_icon.png`.
+2. Place your splash logo at `assets/images/splash_logo.png`.
+3. Run the generators:
+```bash
+dart run flutter_launcher_icons
+dart run flutter_native_splash:create
+```
+
 *Built with ❤️ by the Antigravity Architecture Team.*
