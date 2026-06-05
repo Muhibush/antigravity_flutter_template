@@ -1,0 +1,65 @@
+name: Android CD (Play Store)
+
+on:
+  workflow_dispatch:
+    inputs:
+      flavor:
+        description: 'Flavor to build (dev, staging, prod)'
+        required: true
+        default: 'prod'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+
+jobs:
+  build_and_deploy:
+    name: Build & Deploy to Play Store
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+          
+      - name: Setup Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+          working-directory: android
+
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+        
+      - name: Decode Google Play JSON Key
+        run: |
+          echo "${{ secrets.GOOGLE_PLAY_JSON_KEY_BASE64 }}" | base64 --decode > android/play_config.json
+
+      - name: Install Dependencies
+        run: flutter pub get
+        
+      - name: Run Build Runner
+        run: dart run build_runner build --delete-conflicting-outputs
+        
+      - name: Build and Deploy via Fastlane
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          FLAVOR: ${{ github.event.inputs.flavor }}
+        working-directory: android
+        run: bundle exec fastlane deploy_internal flavor:$FLAVOR

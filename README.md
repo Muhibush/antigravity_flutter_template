@@ -202,4 +202,40 @@ dart run flutter_launcher_icons -f flutter_launcher_icons-dev.yaml
 dart run flutter_native_splash:create --flavor dev
 ```
 
+## 🚀 Deployment (CI/CD)
+
+This template includes a fully configured, industry-standard deployment pipeline using **GitHub Actions** and **Fastlane**.
+
+### 1. Continuous Integration (CI)
+Every Pull Request to `main` or `develop` will automatically run:
+*   `flutter analyze`
+*   `dart format`
+*   `flutter test --coverage`
+
+### 2. Continuous Deployment (CD)
+You can automatically build and upload your app to TestFlight and the Google Play Console straight from GitHub.
+
+**How to trigger a deployment:**
+1. Go to the **Actions** tab in your GitHub repository.
+2. Select either **Android CD (Play Store)** or **iOS CD (TestFlight)** from the left sidebar.
+3. Click the **Run workflow** dropdown on the right.
+4. Select the **Flavor** you want to build (`dev`, `staging`, or `prod`).
+5. Click the green **Run workflow** button.
+
+To use the CD pipelines, you must add the following **Repository Secrets** to your GitHub repository (Settings > Secrets and variables > Actions):
+
+**Android Secrets:**
+*   `ANDROID_KEYSTORE_BASE64` - Your `keystore.jks` file converted to base64.
+*   `ANDROID_KEYSTORE_PASSWORD` - Keystore password.
+*   `ANDROID_KEY_ALIAS` - Key alias.
+*   `ANDROID_KEY_PASSWORD` - Key password.
+*   `GOOGLE_PLAY_JSON_KEY_BASE64` - The Google Cloud Service Account JSON key (base64) used to upload to the Play Console.
+
+**iOS Secrets:**
+*   `MATCH_PASSWORD` - Password for your fastlane match repository.
+*   `MATCH_GIT_BASIC_AUTHORIZATION` - Personal Access Token for match repository access.
+*   `APP_STORE_CONNECT_API_KEY_KEY_ID` - App Store Connect API Key ID.
+*   `APP_STORE_CONNECT_API_KEY_ISSUER_ID` - App Store Connect API Issuer ID.
+*   `APP_STORE_CONNECT_API_KEY_KEY` - The actual App Store Connect API Key (base64).
+
 *Built with ❤️ by the Antigravity Architecture Team.*
