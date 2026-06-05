@@ -95,5 +95,10 @@ Do not clutter the top level with `lib/widget/` or `lib/model/`. Any component t
 *   **DO** abstract them behind generic interfaces (e.g., `AnalyticsService` and `CrashReportingService`).
 *   **DO** inject these services into your global `AppBlocObserver`. This allows you to automatically log every `onEvent` as an analytics event and report every `onError` to Crashlytics without writing boilerplate in every single BLoC.
 
+## 11. UI Assets (Icons & Splash)
+*   **DO NOT** manually add app icons or splash screens to iOS (Xcode) or Android (Android Studio).
+*   **DO** use `flutter_launcher_icons` and `flutter_native_splash` to automate asset generation across all platforms.
+*   **Flavors:** Ensure you place your flavor-specific assets in `assets/images/` (e.g., `app_icon_dev.png`) and run the generators using the flavor-specific configuration files (`-f flutter_launcher_icons-dev.yaml` and `--flavor dev`).
+
 ---
 *Auto-generated during the /grill-me session to enforce consistency across all projects.*
