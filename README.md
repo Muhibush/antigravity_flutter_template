@@ -158,21 +158,22 @@ When you click "Use this template" on GitHub and clone your new repository, the 
 
 You must rename the package and Native bundle IDs before writing code. We highly recommend using the community [`rename`](https://pub.dev/packages/rename) CLI tool to do this instantly and safely.
 
-### 1. Install Rename
+### 1. Set your Mobile App Names & Bundle IDs (iOS/Android)
+Because this template uses Native Flavors (`dev`, `staging`, `prod`), you **cannot** use standard renaming tools for iOS and Android, or you will break the flavors! You must use `flutter_flavorizr`.
+
+1. Open `pubspec.yaml` and scroll to the bottom.
+2. Under `flavorizr: > flavors:`, update the `name:`, `applicationId:`, and `bundleId:` for all three flavors with your desired project names.
+3. Run the generator to automatically update the native iOS and Android code:
+```bash
+dart run flutter_flavorizr
+```
+
+### 2. Set your Desktop App Names (Optional)
+If you are building for macOS, Windows, or Linux, `flavorizr` doesn't support them natively yet. Use the `rename` CLI tool instead:
 ```bash
 dart pub global activate rename
-```
-
-### 2. Set your App Name
-This changes the display name on the user's home screen.
-```bash
-rename setAppName --targets ios,android,macos,linux,windows --value "My Awesome App"
-```
-
-### 3. Set your Bundle ID
-This safely replaces `com.example.antigravityApp` with your actual organization bundle identifier across all native code and Dart imports.
-```bash
-rename setBundleId --targets ios,android,macos,linux,windows --value "com.mycompany.myapp"
+rename setAppName --targets macos,linux,windows --value "My Awesome App"
+rename setBundleId --targets macos,linux,windows --value "com.mycompany.myapp"
 ```
 
 ### 4. Setup your Icons & Splash Screen
